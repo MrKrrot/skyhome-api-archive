@@ -17,11 +17,9 @@ export class AuthService {
     async login(loginDto: LoginDto) {
 
         const user = await this.authModel.findOne({ email: loginDto.email })
-
         if (!user) throw new HttpException('Invalid email or password', HttpStatus.NOT_FOUND)
 
         const isMatch = await compare(loginDto.password, user.password)
-
         if (!isMatch) throw new HttpException('Invalid email or password', HttpStatus.NOT_FOUND)
 
         const token = this.jwtService.sign({ 
