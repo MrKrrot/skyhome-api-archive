@@ -1,4 +1,5 @@
 import Joi from 'joi'
+import 'dotenv/config'
 
 const envVarsSchema = Joi.object({
     JWT_SECRET: Joi.string().required(),

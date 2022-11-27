@@ -13,6 +13,8 @@ async function bootstrap() {
         .setDescription('The SkyHome API Documentation')
         .setVersion('1.0')
         .addTag('Auth')
+        .addTag('Folder Management')
+        .addTag('Folders')
         .addTag('Users')
         .build()
 
