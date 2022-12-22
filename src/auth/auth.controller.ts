@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common'
+import { Controller, Post, Body, HttpCode, HttpStatus, HttpException } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { CreateUserDto } from 'src/users/dto/create-user.dto'
 import { AuthService } from './auth.service'
@@ -18,6 +18,7 @@ export class AuthController {
     @HttpCode(HttpStatus.CREATED)
     @Post('/register')
     register(@Body() createUserDto: CreateUserDto) {
+        if(createUserDto.password !== createUserDto.confirmPassword) throw new HttpException('Passwords do not match', HttpStatus.BAD_REQUEST)
         return this.authService.register(createUserDto)
     }
 

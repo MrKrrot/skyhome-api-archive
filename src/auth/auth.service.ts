@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt'
 import { Model } from 'mongoose'
 import { compare, hash } from 'bcrypt'
 import { CreateUserDto } from 'src/users/dto/create-user.dto'
+import getUserPath from 'src/utils/getUserPath'
 
 @Injectable()
 export class AuthService {
@@ -40,6 +41,8 @@ export class AuthService {
         const hashed = await hash(createUserDto.password, 10)
 
         createUserDto.password = hashed
+
+        getUserPath(createUserDto.username)
         
         return await this.authModel.create(createUserDto)
     }
