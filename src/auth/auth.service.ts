@@ -23,7 +23,7 @@ export class AuthService {
         if (!isMatch) throw new HttpException('Invalid email or password', HttpStatus.NOT_FOUND)
 
         const token = this.jwtService.sign({ 
-            _id: user._id,
+            id: user.id,
             email: user.email,
             username: user.username,
         })

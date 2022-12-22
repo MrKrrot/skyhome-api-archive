@@ -11,8 +11,7 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { FolderSchema } from './folders/schema/folder.schema'
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: 'Folder', schema: FolderSchema }]),
-    FilesModule, FoldersModule, FoldersService],
+    imports: [MongooseModule.forFeature([{ name: 'Folder', schema: FolderSchema }]), FilesModule, FoldersModule],
     controllers: [FmController, FilesController, FoldersController],
     providers: [FmService, FilesService, FoldersService],
 })

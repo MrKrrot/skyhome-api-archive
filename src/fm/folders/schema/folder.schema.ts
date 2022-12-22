@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { HydratedDocument } from 'mongoose'
+import { HydratedDocument, Types } from 'mongoose'
 
 export type FolderDocument = HydratedDocument<Folder>
 
@@ -7,12 +7,14 @@ export type FolderDocument = HydratedDocument<Folder>
 export class Folder {
     @Prop({ required: true })
         name: string
+    @Prop({default: '#FFFFFF'})
+        color: string
     @Prop()
         path: string
     @Prop()
         parentPath: string
-    @Prop()
-        owner: string
+    @Prop({ type: Types.ObjectId, ref: 'User' })
+        owner: Types.ObjectId
     @Prop()
         children: string[]
 }
