@@ -12,5 +12,8 @@ export class CreateUserDto {
     @IsNotEmpty({message: 'Password is required'})
     @ApiProperty({description: 'Password', example: 'Passw@rd&0626'})
         password: string
+    @IsNotEmpty({message: 'Confirm password is required'})
+    @ApiProperty({description: 'Confirm password', example: 'Passw@rd&0626'})
+        confirmPassword: string
     isActive?: boolean
 }
