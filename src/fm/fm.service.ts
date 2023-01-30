@@ -29,6 +29,7 @@ export class FmService {
             dirContent.directories.push({
                 id: userFolder.id as string,
                 name: userFolder.name as string,
+                color: userFolder.color as string,
             })
         }
 
@@ -59,6 +60,7 @@ export class FmService {
             dirContent.directories.push({
                 id: userFolder.id as string,
                 name: userFolder.name as string,
+                color: userFolder.color as string,
             })
         }
 

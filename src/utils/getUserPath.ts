@@ -5,13 +5,10 @@ import { STORAGE_PATH } from 'src/config'
 const getUserPath = (user: string) => {
     
     const os = process.platform
+    const slash = os === 'win32' ? '\\' : '/'
     let userPath = ''
-
-    if (os === 'win32') {
-        userPath = path.join(STORAGE_PATH, '\\', user)
-    }
     
-    userPath = path.join(STORAGE_PATH, '/', user)
+    userPath = path.join(STORAGE_PATH, slash, user)
 
     if (!fs.existsSync(STORAGE_PATH)) {
         fs.mkdirSync(STORAGE_PATH)
@@ -25,7 +22,8 @@ const getUserPath = (user: string) => {
 
     return {
         path: userPath, 
-        dir: userDir
+        dir: userDir,
+        slash
     }
 }
 

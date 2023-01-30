@@ -1,7 +1,9 @@
-import { Controller, Delete, HttpException, HttpStatus, Patch, Post } from '@nestjs/common'
-import { UseGuards } from '@nestjs/common/decorators'
+import { Controller, Delete, HttpException, HttpStatus, Patch, Post, Req, UploadedFiles, UseInterceptors, UseGuards, Param, Body } from '@nestjs/common'
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 import { JwtGuard } from 'src/auth/jwt.guard';
+import { RenameFileDto } from './dto/rename-file.dto';
 import { FilesService } from './files.service';
 
 @ApiTags('Files')
@@ -16,31 +18,49 @@ export class FilesController {
     constructor(private readonly filesService: FilesService) {}
 
     @Post()
-    upload() {
-        return this.filesService.upload()
+    @UseInterceptors(FilesInterceptor('files'))
+    upload(@UploadedFiles() files: Array<Express.Multer.File>, @Req() req: Request) {
+        if (!files.length) {
+            throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST)
+        }
+
+        return this.filesService.upload(files, req.user)
     }
 
     @Post(':folderId')
-    uploadOnFolder() {
-        return this.filesService.uploadOnFolder()
+    @UseInterceptors(FilesInterceptor('files'))
+    uploadOnFolder(@UploadedFiles() files: Array<Express.Multer.File>, @Req() req: Request, @Param('folderId') folderId: string) {
+        if (!files.length) {
+            throw new HttpException('No file uploaded', HttpStatus.BAD_REQUEST)
+        }
+
+        return this.filesService.uploadOnFolder(files, req.user, folderId)
     }
 
-    @Patch(':fileName')
-    rename() {
-        return this.filesService.rename()
+    @Patch()
+    rename( @Body() renameFileDto: RenameFileDto, @Req() req: Request) {
+        if (renameFileDto.name === renameFileDto.newName) {
+            throw new HttpException('New file name is the same as the old one', HttpStatus.BAD_REQUEST)
+        }
+        
+        return this.filesService.rename(renameFileDto, req.user)
     }
 
-    @Patch(':folderId/:fileName')
-    renameOnFolder() {
-        return this.filesService.renameOnFolder()
+    @Patch(':folderId')
+    renameOnFolder(@Body() renameFileDto: RenameFileDto, @Req() req: Request, @Param('folderId') folderId: string) {
+        if (renameFileDto.name === renameFileDto.newName) {
+            throw new HttpException('New file name is the same as the old one', HttpStatus.BAD_REQUEST)
+        }
+
+        return this.filesService.renameOnFolder(renameFileDto, req.user, folderId)
     }
 
-    @Delete(':fileName')
+    @Delete()
     delete() {
         return this.filesService.delete()
     }
 
-    @Delete(':folderId/:fileName')
+    @Delete(':folderId')
     deleteOnFolder() {
         return this.filesService.deleteOnFolder()
     }

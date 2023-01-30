@@ -20,14 +20,14 @@ export class FoldersController {
 
     @Post()
     create(@Body () createFolderDto: CreateFolderDto, @Req() req: Request) {
-        const { user }: any = req
+        const { user } = req
         
         return this.foldersService.create(createFolderDto, user)
     }
 
     @Post(':folderId')
     createOnFolder(@Body () createFolderDto: CreateFolderDto, @Param('folderId') folderId: string, @Req() req: Request) {
-        const { user }: any = req
+        const { user } = req
         
         return this.foldersService.createOnFolder(createFolderDto, folderId, user)
     }
