@@ -5,6 +5,7 @@ import { Folder, FolderDocument } from '../folders/schema/folder.schema'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model, Types } from 'mongoose'
 import { RenameFileDto } from './dto/rename-file.dto'
+import { DeleteFileDto } from './dto/delete-file.dto'
 
 @Injectable()
 export class FilesService {
@@ -95,11 +96,28 @@ export class FilesService {
         return 'File renamed successfully'
     }
 
-    delete() {
-        return 'This action deletes a file'
+    delete(deleteFileDto: DeleteFileDto, user: any) {
+        const { path, slash } = getUserPath(user.username)
+        const { name } = deleteFileDto
+
+        try {
+            fs.unlinkSync(`${path}${slash}${name}`)
+        } catch(e) {
+            throw new HttpException('File not found', HttpStatus.NOT_FOUND)
+        }
+
+        return 'File deleted successfully'
     }
 
-    deleteOnFolder() {
-        return 'This action deletes a file on a folder'
+    async deleteOnFolder(deleteFileDto: DeleteFileDto, user: any, folderId: string) {
+        const folder = await this.folderModel.findById(folderId)
+        const { name } = deleteFileDto
+        const { path, slash } = getUserPath(`${user.username}${folder.path}`)
+        
+        try {
+            fs.unlinkSync(`${path}${slash}${name}`)
+        } catch(e) {
+            throw new HttpException('File not found', HttpStatus.NOT_FOUND)
+        }
     }
 }

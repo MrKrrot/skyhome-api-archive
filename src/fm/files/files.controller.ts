@@ -3,6 +3,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { JwtGuard } from 'src/auth/jwt.guard';
+import { DeleteFileDto } from './dto/delete-file.dto';
 import { RenameFileDto } from './dto/rename-file.dto';
 import { FilesService } from './files.service';
 
@@ -54,14 +55,14 @@ export class FilesController {
 
         return this.filesService.renameOnFolder(renameFileDto, req.user, folderId)
     }
-
+ 
     @Delete()
-    delete() {
-        return this.filesService.delete()
+    delete(@Body() deleteFileDto: DeleteFileDto, @Req() req: Request) {
+        return this.filesService.delete(deleteFileDto, req.user)
     }
 
     @Delete(':folderId')
-    deleteOnFolder() {
-        return this.filesService.deleteOnFolder()
+    deleteOnFolder(@Body() deleteFileDto: DeleteFileDto, @Req() req: Request, @Param('folderId') folderId: string) {
+        return this.filesService.deleteOnFolder(deleteFileDto, req.user, folderId)
     }
 }
