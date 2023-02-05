@@ -119,5 +119,7 @@ export class FilesService {
         } catch(e) {
             throw new HttpException('File not found', HttpStatus.NOT_FOUND)
         }
+
+        return 'File deleted successfully'
     }
 }
