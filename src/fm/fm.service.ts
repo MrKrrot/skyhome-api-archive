@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model, Types } from 'mongoose'
 import { Folder, FolderDocument } from './folders/schema/folder.schema'
-import getUserPath from 'src/utils/getUserPath'
+import getUserPath from '../utils/getUserPath'
 
 @Injectable()
 export class FmService {

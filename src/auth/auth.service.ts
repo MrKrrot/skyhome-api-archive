@@ -1,12 +1,12 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { User, UserDocument } from 'src/users/schema/user.schema'
+import { User, UserDocument } from '../users/schema/user.schema'
 import { LoginDto } from './dto/login.dto'
 import { JwtService } from '@nestjs/jwt'
 import { Model } from 'mongoose'
 import { compare, hash } from 'bcrypt'
-import { CreateUserDto } from 'src/users/dto/create-user.dto'
-import getUserPath from 'src/utils/getUserPath'
+import { CreateUserDto } from '../users/dto/create-user.dto'
+import getUserPath from '../utils/getUserPath'
 
 @Injectable()
 export class AuthService {

@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import getUserPath from 'src/utils/getUserPath'
+import getUserPath from '../../utils/getUserPath'
 import fs from 'fs'
 import { Folder, FolderDocument } from '../folders/schema/folder.schema'
 import { InjectModel } from '@nestjs/mongoose'

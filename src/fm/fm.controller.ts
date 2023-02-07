@@ -1,7 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common'
 import { Req, Request, UseGuards } from '@nestjs/common/decorators'
 import { ApiTags } from '@nestjs/swagger'
-import { JwtGuard } from 'src/auth/jwt.guard'
+import { JwtGuard } from '../auth/jwt.guard'
 import { FmService } from './fm.service'
 
 @ApiTags('Folder Management')

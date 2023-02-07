@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import getUserPath from 'src/utils/getUserPath'
+import getUserPath from '../../utils/getUserPath'
 import { CreateFolderDto } from './dto/create-folder.dto'
 import { RenameFolderDto } from './dto/rename-folder.dto'
 import fs from 'fs'

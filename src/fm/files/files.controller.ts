@@ -2,7 +2,7 @@ import { Controller, Delete, HttpException, HttpStatus, Patch, Post, Req, Upload
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
-import { JwtGuard } from 'src/auth/jwt.guard';
+import { JwtGuard } from '../../auth/jwt.guard';
 import { DeleteFileDto } from './dto/delete-file.dto';
 import { RenameFileDto } from './dto/rename-file.dto';
 import { FilesService } from './files.service';

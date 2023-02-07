@@ -1,6 +1,6 @@
 import path from 'path'
 import fs from 'fs'
-import { STORAGE_PATH } from 'src/config'
+import { STORAGE_PATH } from '../config'
 
 const getUserPath = (user: string) => {
     
